@@ -24,6 +24,17 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(ex.getStatusCode().value(), code, ex.getReason());
     }
 
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
+        // Log the full exception internally
+        System.err.println("CRITICAL: Unhandled exception caught: " + ex.getMessage());
+        ex.printStackTrace();
+
+        // Return a safe, generic error response to the client
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "INTERNAL_SERVER_ERROR",
+                "An unexpected error occurred. Please contact support.");
+    }
+
     private ResponseEntity<Map<String, Object>> buildErrorResponse(int status, String code, String description) {
         Map<String, Object> error = new HashMap<>();
         error.put("code", code);
