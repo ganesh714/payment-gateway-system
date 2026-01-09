@@ -63,6 +63,18 @@ graph TD
 
 ---
 
+## 🛡️ Automated Testing
+
+The project now includes a suite of automated tests for the backend. You can run these using Docker without needing to install Maven locally.
+
+**Run Backend Tests:**
+```bash
+docker run --rm -v "${PWD}/backend:/usr/src/app" -w /usr/src/app maven:3.9-eclipse-temurin-17 mvn test
+```
+*Note: On Windows PowerShell, use `${PWD}`. On Command Prompt, use `%cd%`.*
+
+---
+
 ## 🧪 Verification Process (For Validators)
 
 Follow this end-to-end flow to validate the system's core functionality.
