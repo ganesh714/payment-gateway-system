@@ -27,6 +27,19 @@ This project is a comprehensive simulation of a modern payment gateway. It provi
 
 ---
 
+## 📂 Project Structure
+
+```bash
+payment-gateway-system/
+├── backend/           # Spring Boot Application
+├── frontend/          # React Admin Dashboard
+├── checkout-page/     # Standalone Payment Page
+├── docker-compose.yml # Orchestration Config
+└── README.md          # Project Documentation
+```
+
+---
+
 ## 🏗️ Architecture
 
 ```mermaid
@@ -60,18 +73,6 @@ graph TD
 
 3. **Wait for initialization**:
    Ensure all containers are healthy. The backend may take a few moments to start.
-
----
-
-## 🛡️ Automated Testing
-
-The project now includes a suite of automated tests for the backend. You can run these using Docker without needing to install Maven locally.
-
-**Run Backend Tests:**
-```bash
-docker run --rm -v "${PWD}/backend:/usr/src/app" -w /usr/src/app maven:3.9-eclipse-temurin-17 mvn test
-```
-*Note: On Windows PowerShell, use `${PWD}`. On Command Prompt, use `%cd%`.*
 
 ---
 
@@ -118,6 +119,18 @@ Confirm the transaction was recorded.
 
 ---
 
+## 🛡️ Automated Testing
+
+The project now includes a suite of automated tests for the backend. You can run these using Docker without needing to install Maven locally.
+
+**Run Backend Tests:**
+```bash
+docker run --rm -v "${PWD}/backend:/usr/src/app" -w /usr/src/app maven:3.9-eclipse-temurin-17 mvn test
+```
+*Note: On Windows PowerShell, use `${PWD}`. On Command Prompt, use `%cd%`.*
+
+---
+
 ## 🔌 API Reference
 
 | Method | Endpoint | Description | Auth Required |
@@ -126,18 +139,3 @@ Confirm the transaction was recorded.
 | `POST` | `/api/v1/orders` | Create a new payment order | ✅ |
 | `POST` | `/api/v1/payments` | Process a payment | ✅ |
 | `GET` | `/api/v1/payments/{id}` | Retrieve payment details | ✅ |
-
----
-
-## 📂 Project Structure
-
-```bash
-payment-gateway-system/
-├── backend/           # Spring Boot Application
-├── frontend/          # React Admin Dashboard
-├── checkout-page/     # Standalone Payment Page
-├── docker-compose.yml # Orchestration Config
-└── README.md          # Project Documentation
-```
-
-
