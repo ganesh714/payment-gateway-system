@@ -35,3 +35,30 @@ The system auto-seeds a test merchant:
 - `POST /api/v1/orders` - Create Order (Auth required)
 - `POST /api/v1/payments` - Create Payment (Auth required)
 - `GET /api/v1/payments/{id}` - Get Payment Status (Auth required)
+
+## Verification Process (For Validators)
+Follow these steps to validate the payment flow:
+
+### 1. Create an Order
+Use the following PowerShell command to create a test order:
+```powershell
+Invoke-RestMethod -Uri "http://localhost:8000/api/v1/orders" -Method Post -Headers @{"X-Api-Key"="key_test_abc123"; "X-Api-Secret"="secret_test_xyz789"; "Content-Type"="application/json"} -Body '{"amount": 75000, "currency": "INR", "receipt": "final_verification"}'
+```
+**Expected Output:**
+- Returns an `id` (e.g., `order_yVWbPfcNrb5Rpkxt`)
+- Status: `created`
+
+### 2. Process Payment
+Copy the `id` from the previous step and open the checkout page:
+`http://localhost:3001/?order_id=YOUR_ORDER_ID`
+(Example: `http://localhost:3001/?order_id=order_yVWbPfcNrb5Rpkxt`)
+
+- Select a payment method (Card/UPI).
+- Click "Pay Now".
+- Wait for success/failure message.
+
+### 3. Verify in Dashboard
+1. Go to [http://localhost:3000](http://localhost:3000).
+2. Login with `test@example.com` (any password).
+3. Check **Transactions** tab to see the new entry.
+
