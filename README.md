@@ -121,29 +121,21 @@ Confirm the transaction was recorded.
 
 ## 📸 Screenshots
 
-**1. Order Generation**
-> *Terminal output showing the API creation of a new order.*
-![Setup](docs/screenshots/1_setup.png)
-
-**2. Checkout Process**
-> *User accesses the checkout page and selects a payment method.*
+**1. Merchant Dashboard**
+> *Login, Admin Overview, and Transaction History.*
 <p float="left">
-  <img src="docs/screenshots/2_checkout_init.png" width="45%" />
-  <img src="docs/screenshots/3_payment_method.png" width="45%" /> 
+  <img src="docs/screenshots/merchant_login.png" width="30%" />
+  <img src="docs/screenshots/dashboard_overview.png" width="30%" /> 
+  <img src="docs/screenshots/dashboard_transactions.png" width="30%" />
 </p>
 
-**3. Payment Execution**
-> *Processing the payment and receiving success confirmation.*
+**2. Payment Experience**
+> *Hosted checkout forms (UPI & Card), real-time processing, and success confirmation.*
 <p float="left">
-  <img src="docs/screenshots/4_payment_processing.png" width="45%" />
-  <img src="docs/screenshots/5_success.png" width="45%" /> 
-</p>
-
-**4. Merchant Dashboard Verification**
-> *Login and verification of the captured transaction.*
-<p float="left">
-  <img src="docs/screenshots/6_dashboard_login.png" width="45%" />
-  <img src="docs/screenshots/7_dashboard_transaction.png" width="45%" /> 
+  <img src="docs/screenshots/UPI_form.png" width="22%" />
+  <img src="docs/screenshots/Card_form.png" width="22%" />
+  <img src="docs/screenshots/payment_processing.png" width="22%" />
+  <img src="docs/screenshots/payment_successful.png" width="22%" /> 
 </p>
 
 ---
