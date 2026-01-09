@@ -44,10 +44,10 @@ payment-gateway-system/
 
 ```mermaid
 graph TD
-    Client[Client App/Postman] -->|API Calls| API[Backend API (8000)]
-    API -->|Auth & Data| DB[(PostgreSQL)]
-    Browser[User Browser] -->|View Dashboard| Dashboard[React Dashboard (3000)]
-    Browser -->|Process Payment| Checkout[Checkout Page (3001)]
+    Client["Client App/Postman"] -->|API Calls| API["Backend API (8000)"]
+    API -->|Auth & Data| DB[("PostgreSQL")]
+    Browser["User Browser"] -->|View Dashboard| Dashboard["React Dashboard (3000)"]
+    Browser -->|Process Payment| Checkout["Checkout Page (3001)"]
     Checkout -->|Submit Payment| API
     Dashboard -->|Fetch Stats| API
 ```
