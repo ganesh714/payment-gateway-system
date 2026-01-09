@@ -76,9 +76,9 @@ graph TD
 
 ---
 
-## 🧪 Verification Process (For Validators)
+## 🧪 Usage & Manual Testing
 
-Follow this end-to-end flow to validate the system's core functionality.
+Follow these steps to experience the complete payment lifecycle.
 
 ### 1. Create a Test Order
 Generate a new order ID using the API.
