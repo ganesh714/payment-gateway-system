@@ -1,45 +1,75 @@
-# Payment Gateway System
+# 💳 Payment Gateway System
 
-A "Mini-Razorpay" style payment gateway with Merchant Onboarding, Order Management, and Hosted Checkout.
+> A robust, full-stack payment processing simulator inspired by Razorpay, featuring Merchant Onboarding, Order Management, and a Hosted Checkout experience.
 
-## Project Structure
-- **backend**: Java Spring Boot API (Port 8000)
-- **frontend**: React Dashboard (Port 3000)
-- **checkout-page**: React Checkout Page (Port 3001)
-- **postgres**: Database (Port 5432)
+---
 
-## Setup
-### Prerequisites
-- Docker and Docker Compose
+## 🚀 Overview
 
-### Running the Application
-```bash
-docker-compose up -d --build
+This project is a comprehensive simulation of a modern payment gateway. It provides a complete ecosystem for merchants to manage orders and for users to complete payments securely. Built with a microservices-oriented architecture in mind, it leverages **Spring Boot** for high-performance backend processing and **React** for a responsive user interface.
+
+### Key Features
+- **Merchant Dashboard**: Real-time insights into transactions and API credentials.
+- **Hosted Checkout**: A secure, customizable payment page for end-users.
+- **Simulated Processing**: Realistic payment lifecycle with random success/failure scenarios (5-10s latency).
+- **Robust Validation**: Implements Luhn algorithm for cards and VPA validation for UPI.
+
+---
+
+## 🛠️ Tech Stack
+
+| Component | Technology | Description |
+| :--- | :--- | :--- |
+| **Backend** | ![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white) **Spring Boot** | REST API, Order Logic, Payment Processing |
+| **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) **Vite** | Admin Dashboard & Checkout SPA |
+| **Database** | ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat-square&logo=postgresql&logoColor=white) | Relational Data Store |
+| **DevOps** | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) | Containerization & Orchestration |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    Client[Client App/Postman] -->|API Calls| API[Backend API (8000)]
+    API -->|Auth & Data| DB[(PostgreSQL)]
+    Browser[User Browser] -->|View Dashboard| Dashboard[React Dashboard (3000)]
+    Browser -->|Process Payment| Checkout[Checkout Page (3001)]
+    Checkout -->|Submit Payment| API
+    Dashboard -->|Fetch Stats| API
 ```
-Wait for all services to be healthy.
 
-## Test Credentials
-The system auto-seeds a test merchant:
-- **Email**: `test@example.com`
-- **API Key**: `key_test_abc123`
-- **API Secret**: `secret_test_xyz789`
+---
 
-## Features
-- **Merchant Dashboard**: View transactions and credentials at [http://localhost:3000](http://localhost:3000). (Login with `test@example.com` / any password)
-- **Hosted Checkout**: Complete payments at [http://localhost:3001/checkout?order_id=...](http://localhost:3001/checkout).
-- **Payment Processing**: Simulated 5-10s delay with random success/failure.
-- **Validation**: Full Luhn algorithm, VPA validation, and synchronous processing.
+## 🏁 Getting Started
 
-## API Endpoints
-- `GET /health` - System health
-- `POST /api/v1/orders` - Create Order (Auth required)
-- `POST /api/v1/payments` - Create Payment (Auth required)
-- `GET /api/v1/payments/{id}` - Get Payment Status (Auth required)
+### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running.
 
-## Verification Process (For Validators)
-Follow these steps to validate the payment flow:
+### Installation & Run
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/ganesh714/payment-gateway-system.git
+   cd payment-gateway-system
+   ```
 
-### 1. Create an Order
+2. **Start the application**:
+   ```bash
+   docker-compose up -d --build
+   ```
+
+3. **Wait for initialization**:
+   Ensure all containers are healthy. The backend may take a few moments to start.
+
+---
+
+## 🧪 Verification Process (For Validators)
+
+Follow this end-to-end flow to validate the system's core functionality.
+
+### 1. Create a Test Order
+Generate a new order ID using the API.
+
 **Option A: Windows (PowerShell)**
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:8000/api/v1/orders" -Method Post -Headers @{"X-Api-Key"="key_test_abc123"; "X-Api-Secret"="secret_test_xyz789"; "Content-Type"="application/json"} -Body '{"amount": 75000, "currency": "INR", "receipt": "final_verification"}'
@@ -53,21 +83,49 @@ curl -X POST http://localhost:8000/api/v1/orders \
   -H "Content-Type: application/json" \
   -d '{"amount": 75000, "currency": "INR", "receipt": "final_verification"}'
 ```
-**Expected Output:**
-- Returns an `id` (e.g., `order_yVWbPfcNrb5Rpkxt`)
-- Status: `created`
+
+> **Note**: Copy the `id` returned from the response (e.g., `order_yVWbPfcNrb5Rpkxt`).
 
 ### 2. Process Payment
-Copy the `id` from the previous step and open the checkout page:
-`http://localhost:3001/?order_id=YOUR_ORDER_ID`
-(Example: `http://localhost:3001/?order_id=order_yVWbPfcNrb5Rpkxt`)
+Open the hosted checkout page with your Order ID:
 
-- Select a payment method (Card/UPI).
-- Click "Pay Now".
-- Wait for success/failure message.
+`http://localhost:3001/?order_id=YOUR_ORDER_ID`
+
+1.  **Select Method**: Choose Credit Card or UPI.
+2.  **Pay**: Click "Pay Now".
+3.  **Wait**: Observe the simulated processing delay and final status.
 
 ### 3. Verify in Dashboard
-1. Go to [http://localhost:3000](http://localhost:3000).
-2. Login with `test@example.com` (any password).
-3. Check **Transactions** tab to see the new entry.
+Confirm the transaction was recorded.
+
+1.  Access **[Merchant Dashboard](http://localhost:3000)**.
+2.  **Login**:
+    - Email: `test@example.com`
+    - Password: *(Any secure password)*
+3.  Navigate to **Transactions** to view the real-time status.
+
+---
+
+## 🔌 API Reference
+
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :---: |
+| `GET` | `/health` | Check system availability | ❌ |
+| `POST` | `/api/v1/orders` | Create a new payment order | ✅ |
+| `POST` | `/api/v1/payments` | Process a payment | ✅ |
+| `GET` | `/api/v1/payments/{id}` | Retrieve payment details | ✅ |
+
+---
+
+## 📂 Project Structure
+
+```bash
+payment-gateway-system/
+├── backend/           # Spring Boot Application
+├── frontend/          # React Admin Dashboard
+├── checkout-page/     # Standalone Payment Page
+├── docker-compose.yml # Orchestration Config
+└── README.md          # Project Documentation
+```
+
 
