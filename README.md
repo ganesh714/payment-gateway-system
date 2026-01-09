@@ -40,9 +40,18 @@ The system auto-seeds a test merchant:
 Follow these steps to validate the payment flow:
 
 ### 1. Create an Order
-Use the following PowerShell command to create a test order:
+**Option A: Windows (PowerShell)**
 ```powershell
 Invoke-RestMethod -Uri "http://localhost:8000/api/v1/orders" -Method Post -Headers @{"X-Api-Key"="key_test_abc123"; "X-Api-Secret"="secret_test_xyz789"; "Content-Type"="application/json"} -Body '{"amount": 75000, "currency": "INR", "receipt": "final_verification"}'
+```
+
+**Option B: Mac/Linux (curl)**
+```bash
+curl -X POST http://localhost:8000/api/v1/orders \
+  -H "X-Api-Key: key_test_abc123" \
+  -H "X-Api-Secret: secret_test_xyz789" \
+  -H "Content-Type: application/json" \
+  -d '{"amount": 75000, "currency": "INR", "receipt": "final_verification"}'
 ```
 **Expected Output:**
 - Returns an `id` (e.g., `order_yVWbPfcNrb5Rpkxt`)
